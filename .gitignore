@@ -1,0 +1,7 @@
+node_modules/
+*.vsix
+# local org action log and deploy records (org usernames, record ids): kept on disk, never published
+logs/
+runs/
+.sfflow/
+.vscode-test/
