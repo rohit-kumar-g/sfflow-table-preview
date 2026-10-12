@@ -1,0 +1,295 @@
+{
+  "name": "sfflow-table-preview",
+  "displayName": "Flow Table Preview for Salesforce",
+  "description": "See what a Salesforce flow does from its XML: step-by-step table, diagram, best-practice checks, compare with org versions or local files, Markdown/HTML export and Ask with AI.",
+  "version": "0.5.0",
+  "publisher": "rohit-kumar-g",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rohit-kumar-g/sfflow-table-preview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rohit-kumar-g/sfflow-table-preview/issues"
+  },
+  "homepage": "https://github.com/rohit-kumar-g/sfflow-table-preview#readme",
+  "qna": "https://github.com/rohit-kumar-g/sfflow-table-preview/discussions",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#1e2f7a",
+    "theme": "dark"
+  },
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "salesforce",
+    "flow",
+    "flows",
+    "flow builder",
+    "sfdx",
+    "sf cli",
+    "metadata",
+    "diagram",
+    "table",
+    "compare",
+    "diff",
+    "lint",
+    "markdown",
+    "agentforce",
+    "ai"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:xml",
+    "workspaceContains:**/*.flow-meta.xml",
+    "onWebviewPanel:sfflowPreview"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "sfflowPreview.preview",
+        "title": "Preview as Table",
+        "category": "SF Flow",
+        "icon": "$(table)"
+      },
+      {
+        "command": "sfflowPreview.askAi",
+        "title": "Ask with AI",
+        "category": "SF Flow",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "sfflowPreview.saveMarkdown",
+        "title": "Save Flow Table as Markdown",
+        "category": "SF Flow",
+        "icon": "$(markdown)"
+      },
+      {
+        "command": "sfflowPreview.saveHtml",
+        "title": "Save Flow Table as HTML",
+        "category": "SF Flow",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "sfflowPreview.compareOrgVersion",
+        "title": "Compare with Org Version…",
+        "category": "SF Flow",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "sfflowPreview.compareLocalFile",
+        "title": "Compare with Local File…",
+        "category": "SF Flow",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "sfflowPreview.openSource",
+        "title": "Open Flow XML",
+        "category": "SF Flow",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "sfflowPreview.clearOrgVersionCache",
+        "title": "Clear Cached Org Versions",
+        "category": "SF Flow",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "sfflowPreview.feedback",
+        "title": "Give Feedback or Report an Issue",
+        "category": "SF Flow",
+        "icon": "$(feedback)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "sfflowPreview.preview",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/ || sfflowPreview.isFlow",
+          "group": "navigation"
+        },
+        {
+          "command": "sfflowPreview.askAi",
+          "when": "activeWebviewPanelId == 'sfflowPreview'",
+          "group": "navigation@1"
+        },
+        {
+          "command": "sfflowPreview.compareOrgVersion",
+          "when": "activeWebviewPanelId == 'sfflowPreview'",
+          "group": "navigation@2"
+        },
+        {
+          "command": "sfflowPreview.saveMarkdown",
+          "when": "activeWebviewPanelId == 'sfflowPreview'",
+          "group": "navigation@3"
+        },
+        {
+          "command": "sfflowPreview.saveHtml",
+          "when": "activeWebviewPanelId == 'sfflowPreview'",
+          "group": "navigation@4"
+        },
+        {
+          "command": "sfflowPreview.openSource",
+          "when": "activeWebviewPanelId == 'sfflowPreview'",
+          "group": "navigation@5"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "sfflowPreview.preview",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/ || sfflowPreview.isFlow",
+          "group": "navigation"
+        },
+        {
+          "command": "sfflowPreview.compareOrgVersion",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/ || sfflowPreview.isFlow",
+          "group": "navigation"
+        },
+        {
+          "command": "sfflowPreview.compareLocalFile",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/ || sfflowPreview.isFlow",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "sfflowPreview.preview",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/",
+          "group": "navigation"
+        },
+        {
+          "command": "sfflowPreview.compareOrgVersion",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/",
+          "group": "navigation"
+        },
+        {
+          "command": "sfflowPreview.compareLocalFile",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "sfflowPreview.preview",
+          "when": "resourceFilename =~ /\\.flow(-meta\\.xml)?$/ || sfflowPreview.isFlow"
+        },
+        {
+          "command": "sfflowPreview.askAi",
+          "when": "sfflowPreview.hasPreview"
+        },
+        {
+          "command": "sfflowPreview.saveMarkdown",
+          "when": "sfflowPreview.hasPreview"
+        },
+        {
+          "command": "sfflowPreview.saveHtml",
+          "when": "sfflowPreview.hasPreview"
+        },
+        {
+          "command": "sfflowPreview.openSource",
+          "when": "sfflowPreview.hasPreview"
+        },
+        {
+          "command": "sfflowPreview.compareOrgVersion",
+          "when": "sfflowPreview.hasPreview || resourceFilename =~ /\\.flow(-meta\\.xml)?$/ || sfflowPreview.isFlow"
+        },
+        {
+          "command": "sfflowPreview.compareLocalFile",
+          "when": "sfflowPreview.hasPreview || resourceFilename =~ /\\.flow(-meta\\.xml)?$/ || sfflowPreview.isFlow"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Flow Table Preview for Salesforce",
+      "properties": {
+        "sfflowPreview.aiTarget": {
+          "type": "string",
+          "default": "ask",
+          "enum": [
+            "ask",
+            "claudeCode",
+            "agentforce",
+            "chat",
+            "languageModel",
+            "clipboard",
+            "openFile"
+          ],
+          "enumDescriptions": [
+            "Show a picker of the AI targets that are available each time.",
+            "Open a new Claude Code tab with the prompt (needs the Claude Code extension).",
+            "Put the prompt in the Agentforce chat input (needs Agentforce for Developers).",
+            "Open VS Code Chat with the prompt (Copilot or another chat participant).",
+            "Answer inside the preview using a VS Code language model (any extension that provides one).",
+            "Copy the prompt and summary to the clipboard, to paste into any agent.",
+            "Open the saved summary Markdown file, so an agent that reads open files can use it."
+          ],
+          "description": "Where \"Ask with AI\" sends the flow summary."
+        },
+        "sfflowPreview.summaryFolder": {
+          "type": "string",
+          "default": ".sfflow",
+          "description": "Folder (relative to the workspace folder) where the AI summary Markdown is saved. The folder gets its own .gitignore so it is never committed. Leave empty to save in the extension's private storage instead."
+        },
+        "sfflowPreview.defaultPrompt": {
+          "type": "string",
+          "editPresentation": "multilineText",
+          "default": "Your purpose is to help everyone quickly understand what this Salesforce flow does and how. Think step by step and briefly summarize the flow as: the purpose of the flow; the main objects queried, inserted, updated or deleted; dependencies from outside the flow (labels, hard-coded ids, values, emails, names, etc.); the main conditions it evaluates; and any potential or evident issues.",
+          "description": "Prompt used by \"Ask with AI\" when the question box is left empty."
+        },
+        "sfflowPreview.showResources": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show variables, formulas, constants, text templates and choices at the end of the table."
+        },
+        "sfflowPreview.sfPath": {
+          "type": "string",
+          "default": "sf",
+          "description": "Salesforce CLI command used by \"Compare with Org Version\" (read-only: lists orgs, queries flow versions, retrieves a version's XML). Use a full path if sf is not on PATH."
+        },
+        "sfflowPreview.compare.chooseOrg": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Ask which org to compare with each time. Off: **Compare with org** always uses the default org (`target-org` of the project, else the global one) and shows an error when none is set."
+        },
+        "sfflowPreview.compare.allowVersionToVersion": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Also allow comparing two org versions with each other (adds a second picker). Off: the chosen version is always compared with this file."
+        },
+        "sfflowPreview.compare.reuseRetrievedVersions": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Keep the XML retrieved for **Side-by-side XML diff** and reuse it when the same org version is compared again (an edited Draft is retrieved again). Off: retrieve a fresh copy every time.\n\nThe files are in the extension's own storage folder (`globalStorage/rohit-kumar-g.sfflow-table-preview/org-versions`), never in your project.\n\n[Clear cached org versions](command:sfflowPreview.clearOrgVersionCache)"
+        },
+        "sfflowPreview.checks.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Quick best-practice checks (DML or queries inside loops, missing fault paths, hard-coded record ids, unreachable elements, unused resources, missing description). Built in and instant; rule names match Salesforce Code Analyzer, whose **SFDX: Scan Current File with Code Analyzer** is the full scan."
+        },
+        "sfflowPreview.checks.showInProblems": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Also list the checks in the **Problems** panel for open flow files (turn off if you prefer Code Analyzer's results there)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node test/run.js",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.6"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@vscode/vsce": "^3.6.0"
+  }
+}
