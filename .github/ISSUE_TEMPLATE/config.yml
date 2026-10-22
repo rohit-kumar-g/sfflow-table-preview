@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and feedback
+    url: https://github.com/rohit-kumar-g/sfflow-table-preview/discussions
+    about: Ask how to do something, share feedback or ideas, or show how you use the extension.
+  - name: Rate the extension
+    url: https://marketplace.visualstudio.com/items?itemName=rohit-kumar-g.sfflow-table-preview&ssr=false#review-details
+    about: A rating or review on the VS Code Marketplace helps other Salesforce developers find it.

@@ -1,0 +1,65 @@
+name: Bug report
+description: Something in Flow Table Preview for Salesforce does not work as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! "SF Flow: Give Feedback or Report an Issue" in VS Code fills in the versions for you.
+        **Please do not paste anything confidential** (org ids, customer data, credentials). If a flow file is needed, reduce it to the elements that show the problem.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: |
+        1. Opened MyFlow.flow-meta.xml and clicked Preview as Table
+        2. Clicked "Compare with org…" and picked version 3
+        3. Expected … but saw …
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Table preview
+        - Diagram
+        - Checks
+        - Compare with org version
+        - Compare with local file
+        - Hover / Go to Definition / Outline
+        - Save Markdown / Save HTML
+        - Ask with AI
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: ext-version
+    attributes:
+      label: Extension version
+      placeholder: e.g. 0.5.0
+    validations:
+      required: true
+  - type: input
+    id: vscode-version
+    attributes:
+      label: VS Code version
+      placeholder: e.g. 1.132.0
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: e.g. win32-x64, darwin-arm64, linux-x64
+  - type: textarea
+    id: flow
+    attributes:
+      label: Flow snippet (optional)
+      description: The smallest part of the flow XML that shows the problem, with confidential values removed.
+      render: xml
+  - type: textarea
+    id: log
+    attributes:
+      label: "SF Flow" output (optional)
+      description: For Compare with org problems, the lines from View > Output > "SF Flow".
+      render: text

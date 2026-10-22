@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest an improvement or a new feature
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would you like to do?
+      description: The task or problem, in your own words. What do you do today instead?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could the extension help?
+      description: Your idea for how it could work (optional).
+  - type: input
+    id: ext-version
+    attributes:
+      label: Extension version
+      placeholder: e.g. 0.5.0
