@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Flow Table Preview logo: a flow (start, decision, step) turning into a table.
+       Source for media/icon.png; rebuild with: node scripts/build-icon.js -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e2f7a"/>
+      <stop offset="1" stop-color="#2f6fe0"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0b1440" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- background tile -->
+  <rect x="8" y="8" width="240" height="240" rx="52" fill="url(#bg)"/>
+  <rect x="8" y="8" width="240" height="240" rx="52" fill="url(#shine)"/>
+
+  <!-- artwork, nudged right so the margins are even -->
+  <g transform="translate(6 0)">
+  <!-- connectors -->
+  <g stroke="#ffffff" stroke-width="10" stroke-linecap="round" fill="none">
+    <path d="M70 70 V104"/>
+    <path d="M70 152 V178"/>
+    <path d="M94 128 H122"/>
+  </g>
+  <!-- arrow head into the table -->
+  <path d="M120 116 L136 128 L120 140 Z" fill="#ffffff"/>
+
+  <!-- start -->
+  <circle cx="70" cy="58" r="18" fill="#ffffff"/>
+  <circle cx="70" cy="58" r="8" fill="#2ec4b6"/>
+
+  <!-- decision -->
+  <path d="M70 100 L98 128 L70 156 L42 128 Z" fill="#fbbf24" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- step -->
+  <rect x="48" y="176" width="44" height="36" rx="9" fill="#ffffff"/>
+  <rect x="48" y="176" width="9" height="36" rx="4" fill="#ef4444"/>
+
+  <!-- table card -->
+  <g filter="url(#shadow)">
+    <rect x="136" y="62" width="92" height="134" rx="14" fill="#ffffff"/>
+  </g>
+  <path d="M150 62 H214 A14 14 0 0 1 228 76 V92 H136 V76 A14 14 0 0 1 150 62 Z" fill="#2ec4b6"/>
+  <g fill="#ffffff" opacity="0.95">
+    <rect x="148" y="73" width="26" height="8" rx="4"/>
+    <rect x="182" y="73" width="34" height="8" rx="4"/>
+  </g>
+  <!-- rows: coloured marker (element type) + text bars -->
+  <g>
+    <rect x="148" y="106" width="10" height="10" rx="3" fill="#3b82f6"/>
+    <rect x="166" y="107" width="50" height="8" rx="4" fill="#cbd5e1"/>
+    <rect x="148" y="132" width="10" height="10" rx="3" fill="#f59e0b"/>
+    <rect x="166" y="133" width="40" height="8" rx="4" fill="#cbd5e1"/>
+    <rect x="148" y="158" width="10" height="10" rx="3" fill="#ef4444"/>
+    <rect x="166" y="159" width="46" height="8" rx="4" fill="#cbd5e1"/>
+  </g>
+  <g stroke="#e2e8f0" stroke-width="2">
+    <path d="M144 124 H220"/>
+    <path d="M144 150 H220"/>
+    <path d="M144 176 H220"/>
+  </g>
+  </g>
+</svg>
