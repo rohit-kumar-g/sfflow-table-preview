@@ -1,0 +1,49 @@
+# Publishes the extension to the VS Code Marketplace with trusted publishing (OpenID Connect):
+# no Personal Access Token is stored anywhere. The Marketplace trusts this repository and this
+# workflow file through the publisher's trusted publishing policy.
+#
+# Runs when a GitHub release is published (the release tag must be v<version in package.json>),
+# or by hand from the Actions tab ("Run workflow").
+
+name: Publish to VS Code Marketplace
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # lets the job request the OIDC token the Marketplace verifies
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Release tag matches package.json version
+        if: github.event_name == 'release'
+        run: |
+          version="v$(node -p "require('./package.json').version")"
+          if [ "${{ github.event.release.tag_name }}" != "$version" ]; then
+            echo "::error::Release tag ${{ github.event.release.tag_name }} does not match package.json version $version"
+            exit 1
+          fi
+
+      - name: Test
+        run: |
+          node test/run.js
+          node test/smoke-extension.js
+
+      - name: Publish
+        run: npx vsce publish --oidc

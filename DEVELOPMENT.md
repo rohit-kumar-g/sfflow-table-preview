@@ -70,11 +70,22 @@ Re-check both after major updates of those extensions.
 
 ## Publishing (publisher `rohit-kumar-g`)
 
+Publishing uses Marketplace **trusted publishing** from GitHub Actions
+(`.github/workflows/publish.yml`, `vsce publish --oidc`): no Personal Access Token.
+
+One-time setup, at https://marketplace.visualstudio.com/manage/publishers/rohit-kumar-g >
+Trusted publishing > Create: provider GitHub Actions, owner `rohit-kumar-g`, repository
+`sfflow-table-preview`, workflow `publish.yml`, environment empty.
+
+Each release:
+
 1. Bump `version` in `package.json` and add a `CHANGELOG.md` entry.
 2. `npm test && node test/smoke-extension.js`
 3. `npm run package` and install the `.vsix` locally once (`code --install-extension <file>`).
-4. Sign in once: `npx vsce login rohit-kumar-g` (asks for an Azure DevOps Personal Access Token with
-   the Marketplace > Manage scope), then `npx vsce publish --allow-missing-repository`,
-   or upload the `.vsix` at https://marketplace.visualstudio.com/manage/publishers/rohit-kumar-g.
-5. When the source is on GitHub: add `"repository"`, `"bugs"` and `"homepage"` to `package.json`,
-   drop `--allow-missing-repository`, and screenshots in the README can use relative paths.
+4. Commit, push, then create a GitHub release with tag `v<version>` and the `.vsix` attached
+   (`gh release create v<version> <file>.vsix --notes-file <notes>`). Publishing the release runs
+   the workflow, which checks the tag matches `package.json`, runs the tests and publishes.
+   The workflow can also be started by hand: `gh workflow run publish.yml`.
+
+Fallback without GitHub Actions: upload the `.vsix` at
+https://marketplace.visualstudio.com/manage/publishers/rohit-kumar-g.

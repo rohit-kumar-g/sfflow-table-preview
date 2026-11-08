@@ -290,6 +290,6 @@
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "@vscode/vsce": "^3.6.0"
+    "@vscode/vsce": "^4.1.0"
   }
 }
